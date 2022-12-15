@@ -1,0 +1,59 @@
+<div class="container-fluid  pt-4 px-4" >
+    <div class="row g-4">
+        <div class="  col-xl-2">
+
+        </div>
+        <div class="col-sm-12   col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Categories</h6>
+                <a href="/admin/addPro" class="btn btn-primary mb-4">Add products</a>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">price</th>
+                            <th scope="col">stock</th>
+                            <th scope="col">image</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     
+                           
+                                
+   
+                               
+                                    <% pros.forEach((element,i)=>{ %>
+                                        <tr>
+                                    <th scope="row"> <%= i+1 %>  </th>
+                                <td><%= element.title %> </td>
+                                <td><%= element.brand %> </td>
+                                <td><%= element.price %> </td>
+                                <td><%= element.stock %> </td>
+                                <td><img src="<%= element.image %> " alt="" width="100px" height="auto"></td>
+                                <td><%= element.description %> </td>
+                                <td><%= element.discount %> </td>
+                                <td><%= element.size %> </td>
+                                <td>
+                                    <a href="/admin/editPro/<%= element._id %>" class="btn btn-success">Edit</a>   
+                                </td>
+                                <td><a href="" onclick="return confirm('Are u sure?')" class="btn btn-danger">Delete</a></td>
+                            </tr>
+                                   <% }) %> 
+                                
+                           
+                               
+                           
+                            
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        </div>

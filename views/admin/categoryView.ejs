@@ -1,0 +1,48 @@
+
+<div class="container-fluid  pt-4 px-4" >
+    <div class="row g-4">
+        <div class="  col-xl-2">
+
+        </div>
+        <div class="col-sm-12   col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Categories</h6>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     
+                           
+                                <% for(i=0;i<cate.length;i++){%>
+   
+                                    <tr>
+                                <th scope="row"><%= i+1 %> </th>
+                                <td><%= cate[i].name %> </td>
+                                <td><%= cate[i].description %> </td>
+                                <td><img src="<%=cate[i].image %> " width="100px" height="auto" alt=""/></td>
+                                <td>
+                                    <a href="/admin/editCategory?id=<%= cate[i]._id %>  " class="btn btn-success">Edit</a>   
+                                </td>
+                                <td><a href="/admin/delCategory/<%= cate[i]._id %> " onclick="return confirm('Are u sure?')" class="btn btn-danger">Delete</a></td>
+                            </tr>
+                                <%} %> 
+                           
+                            
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        </div>
+   
+
+

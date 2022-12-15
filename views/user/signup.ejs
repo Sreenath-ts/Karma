@@ -1,0 +1,230 @@
+
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Login/Register</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Login/Register</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="https://cdn.dribbble.com/users/77553/screenshots/8678451/media/36646cd84ecbfb87756624bf9c5d0899.gif" alt="">
+                    <div class="hover">
+                        <h4>Already a user?</h4>
+                        <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+                        <a class="primary-btn" href="/login">Login Account</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Register</h3>
+                    <form class="row login_form" action="/signup" method="post" id="signupForm">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fullname'" required>
+                            <h5 id="usercheck" style="color: red;">
+                                **Username is missing
+                            </h5>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
+                            <small id="emailvalid" class="form-text
+                            text-muted invalid-feedback">
+                                    Your email must be a valid email
+                                </small>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Mobile number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile number'" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required>
+                            <h5 id="passcheck" style="color: red;">
+                                **Please Fill the password
+                            </h5>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
+                            <h5 id="conpasscheck" style="color: red;">
+                                **Password didn't match
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-12 form-group">
+                            <button type="submit" id="submitbtn" value="submit" class="primary-btn">Create an account</button>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+  // Validate Username
+  $("#usercheck").hide();
+  let usernameError = true;
+  $("#name").keyup(function () {
+    validateUsername();
+  });
+ 
+  function validateUsername() {
+    let usernameValue = $("#name").val();
+    if (usernameValue.length == "") {
+      $("#usercheck").show();
+      usernameError = false;
+      return false;
+    } else if (usernameValue.length < 3 || usernameValue.length > 10) {
+      $("#usercheck").show();
+      $("#usercheck").html("**length of username must be between 3 and 10");
+      usernameError = false;
+      return false;
+    } else {
+      $("#usercheck").hide();
+    }
+  }
+ 
+//   Validate Email
+  const email = document.getElementById("email");
+  email.addEventListener("blur", () => {
+    let regex = /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+    let s = email.value;
+    if (regex.test(s)) {
+      email.classList.remove("is-invalid");
+      emailError = true;
+    } else {
+      email.classList.add("is-invalid");
+      emailError = false;
+    }
+  });
+ 
+  // Validate Password
+  $("#passcheck").hide();
+  let passwordError = true;
+  $("#password").keyup(function () {
+    validatePassword();
+  });
+  function validatePassword() {
+    let passwordValue = $("#password").val();
+    if (passwordValue.length == "") {
+      $("#passcheck").show();
+      passwordError = false;
+      return false;
+    }
+    if (passwordValue.length < 3 || passwordValue.length > 10) {
+      $("#passcheck").show();
+      $("#passcheck").html(
+        "**length of your password must be between 3 and 10"
+      );
+      $("#passcheck").css("color", "red");
+      passwordError = false;
+      return false;
+    } else {
+      $("#passcheck").hide();
+    }
+  }
+ 
+  // Validate Confirm Password
+  $("#conpasscheck").hide();
+  let confirmPasswordError = true;
+  $("#confirmPassword").keyup(function () {
+    validateConfirmPassword();
+  });
+  function validateConfirmPassword() {
+    let confirmPasswordValue = $("#confirmPassword").val();
+    let passwordValue = $("#password").val();
+    if (passwordValue != confirmPasswordValue) {
+      $("#conpasscheck").show();
+      $("#conpasscheck").html("**Password didn't Match");
+      $("#conpasscheck").css("color", "red");
+      confirmPasswordError = false;
+      return false;
+    } else {
+      $("#conpasscheck").hide();
+    }
+  }
+ 
+  // Submit button
+  $("#submitbtn").click(function () {
+    validateUsername();
+    validatePassword();
+    validateConfirmPassword();
+    validateEmail();
+    if (
+      usernameError == true &&
+      passwordError == true &&
+      confirmPasswordError == true &&
+      emailError == true
+    ) {
+        $('#signupForm').submit(function (evt) {
+    evt.preventDefault();
+    window.history.back();
+});
+      return true;
+    } else {  
+      return false;
+    }
+  });
+});
+    // $(document).ready(function(){
+    //     $('#signupForm').validate({
+    //         rules:{
+    //             name:{
+    //                 required:true,
+    //                 minlength:2
+    //             },
+    //             email:{
+    //               required:true,
+    //               email:true
+    //             },
+    //             phone:{
+    //                required:true,
+    //                number:true
+    //             },
+    //             password:{
+    //                 required:true,
+    //                 minlength:5
+    //             },
+    //             confirmPassword:{
+    //                 required:true,
+    //                 minlength:5,
+    //                 equalTo:"#password"
+    //             }
+    //         },
+    //         messages:{
+    //             name:{
+    //                 required: "Please enter a name",
+    //                 minlength: "Your name must consist of at least 2 characters"
+    //             },
+    //             password:{
+    //                 required:"Please provide a password",
+    //                 minlength: "Your password must be atleast  5 characters long"
+    //             },
+    //             confirmPassword:{
+    //                 required: "Please provide a password",
+    //                 minlength: "Your password must be atleast  5 characters long",
+    //                 equalTo:"please enter the same password as above"
+    //             }
+    //         }
+    //     })
+    // })
+</script>
+<!--================End Login Box Area =================-->
