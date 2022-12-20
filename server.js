@@ -36,7 +36,7 @@ app.use(nocache())
 app.use(expressLayouts)
 app.use(express.static('public'))
 app.use(multer({storage:fileStorage,fileFilter:fileFilter}).fields([{name:'imagee1'},{name:'imagee2',maxCount:3}]))
-// .single('imagee'))  
+app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 app.use(session({secret:'key',cookie:{maxAge:600000},resave:true,saveUninitialized:true}))
 
@@ -53,6 +53,8 @@ db.once('open',()=>console.log('Connected to mongoose'))
 
 app.use('/',userRouter)
 app.use('/admin',adminRouter)
+
+
 
 app.listen(process.env.PORT || 3000,(err)=>{
     if(err) console.log(err)

@@ -1,0 +1,230 @@
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col">Image</th> -->
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(cartz.cart.items.length===0){%>
+                                <h5>Cart is Empty</h5>
+                           <% }else{%>
+
+                           
+                            <tr>
+                                <% for(let i=0;i<cartz.cart.items.length;i++){ %>
+
+                               <% let cartItems = cartz.cart.items[i] %> 
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="<%= cartItems.product_id.image[0] %> " alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p><%= cartItems.product_id.title %></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5><%= cartItems.product_id.price %> </h5>
+                                    
+                                </td>
+                                <td>
+                                 
+                                    <div class="product_count">
+                                        <input type="text" name="qty" id="<%= cartz.cart.items[i].product_id._id %>" maxlength="12" value="<%= cartItems.qty %>" title="Quantity:"
+                                            class="input-text qty">
+                                           
+                                        <button 
+                                            class="increase items-count"  onclick="changeQuantity('<%= cartz.cart.items[i].product_id._id %>','1')" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button 
+                                            class="reduced items-count"  onclick="changeQuantity('<%= cartz.cart.items[i].product_id._id %>','-1')" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-dark">REMOVE</button>
+                                    <!-- <h5>$720.00</h5> -->
+                                </td>
+                            </tr>
+                         
+                            <%}%>
+                            <tr class="bottom_button">
+                                <td>
+                                    <a class="gray_btn" href="#">Update Cart</a>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="cupon_text d-flex align-items-center">
+                                        <input type="text" placeholder="Coupon Code">
+                                        <a class="primary-btn" href="#">Apply</a>
+                                        <a  style="padding: 0px 15px;" class="gray_btn" href="#">Close Coupon</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h5>Subtotal</h5>
+                                </td>
+                                <td>
+                                  <!-- // -->
+                                    <h5 id="total"><%= cartz.cart.totalPrice %> </h5>
+                                </td>
+                            </tr>
+                           
+                            <tr class="shipping_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h5>Shipping</h5>
+                                </td>
+                                <td>
+                                    <div class="shipping_box">
+                                        <ul class="list">
+                                            <li><a href="#">Flat Rate: $5.00</a></li>
+                                            <li><a href="#">Free Shipping</a></li>
+                                            <li><a href="#">Flat Rate: $10.00</a></li>
+                                            <li class="active"><a href="#">Local Delivery: $2.00</a></li>
+                                        </ul>
+                                        <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
+                                        <select class="shipping_select">
+                                            <option value="1">Bangladesh</option>
+                                            <option value="2">India</option>
+                                            <option value="4">Pakistan</option>
+                                        </select>
+                                        <select class="shipping_select">
+                                            <option value="1">Select a State</option>
+                                            <option value="2">Select a State</option>
+                                            <option value="4">Select a State</option>
+                                        </select>
+                                        <input type="text" placeholder="Postcode/Zipcode">
+                                        <a class="gray_btn" href="#">Update Details</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a style="padding: 0px 15px;" class="gray_btn" href="#">Continue Shopping</a>
+                                        <a class="primary-btn" href="#">Proceed to checkout</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <% } %> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+       
+        function changeQuantity(proId,cnt){
+        let quantity = document.getElementById(proId).value
+        console.log(quantity)
+        quantity=parseInt(quantity)
+        let cont = parseInt(cnt)
+        $.ajax({
+            url:'/changeQty',
+            method:'POST',
+            data:{
+                productId:proId,
+                quantys:quantity,
+                count:cont
+            },
+            success:((response)=>{
+                if(response.access){
+                    if(response.remove){
+                        Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+   setTimeout(()=>location.reload(),2000) 
+  }
+})
+                   
+                }else{
+                    document.getElementById(proId).value=response.status
+                    document.getElementById('total').innerHTML=response.total
+                }
+                }else{
+                    Swal.fire({
+  title: 'Please Login!!',
+  width: 600,
+  padding: '3em',
+  color: '#716add',
+  background: '#fff url(https://cdn.dribbble.com/users/289158/screenshots/17424235/media/cbb5c66fa688ad46ea08f5f817d37a98.jpg?compress=1&resize=400x300&vertical=top)',
+  backdrop: `
+    rgba(0,0,123,0.4)
+    url("https://sweetalert2.github.io/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `
+})
+                }
+               
+            })
+        })
+        
+        }
+        
+    </script>

@@ -1,7 +1,6 @@
 <div class="container-fluid  pt-4 px-4" >
     <div class="row g-4">
         <div class="  col-xl-2">
-
         </div>
         <div class="col-sm-12   col-xl-6">
             <div class="bg-light rounded h-100 p-4">
@@ -16,10 +15,12 @@
                             <th scope="col">Brand</th>
                             <th scope="col">price</th>
                             <th scope="col">stock</th>
-                            <th scope="col">image</th>
-                            <th scope="col">Description</th>
+                            <th scope="col" >image</th>
+                            <th scope="col"  rowspan="10">Description</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Size</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,21 +30,31 @@
    
                                
                                     <% pros.forEach((element,i)=>{ %>
+                                         
                                         <tr>
                                     <th scope="row"> <%= i+1 %>  </th>
                                 <td><%= element.title %> </td>
                                 <td><%= element.brand %> </td>
                                 <td><%= element.price %> </td>
                                 <td><%= element.stock %> </td>
-                                <td><img src="<%= element.image %> " alt="" width="100px" height="auto"></td>
-                                <td><%= element.description %> </td>
+                                <td>
+                                <% for(let z=0;z<element.image.length;z++){ %>
+                                
+                                        <img src="<%= element.image[z] %> " alt="" width="100px" height="auto">
+                                    
+
+                               <% } %>
+                            </td>
+                               
+                                <td  ><%= element.description %> </td>
                                 <td><%= element.discount %> </td>
                                 <td><%= element.size %> </td>
                                 <td>
-                                    <a href="/admin/editPro/<%= element._id %>" class="btn btn-success">Edit</a>   
+                                    <a href="/admin/editPro?id=<%= element._id %>" class="btn btn-success">Edit</a>   
                                 </td>
-                                <td><a href="" onclick="return confirm('Are u sure?')" class="btn btn-danger">Delete</a></td>
+                                <td><a href="/admin/deletePro/<%= element._id %>" onclick="return confirm('Are u sure?')" class="btn btn-danger">Delete</a></td>
                             </tr>
+                           
                                    <% }) %> 
                                 
                            

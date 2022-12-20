@@ -18,7 +18,10 @@ const {
     adminLogin,
     adminPOst,
     logout,
-    editPro
+    editPro,
+    postEditPro,
+    deletePro,
+
 } = require('../controllers/adminController')
 const category = require('../models/category')
 
@@ -38,5 +41,8 @@ router.post('/addProd',addProPost)
 router.get('/adminLogin',adminLogin)
 router.post('/adminPost',adminPOst)
 router.get('/logout',logout)
-router.get('/editPro/:id',editPro)
+router.get('/editPro',verifyAdmin,editPro)
+router.post('/postEditPro/:id',postEditPro)
+router.get('/deletePro/:id',deletePro)
+
 module.exports = router

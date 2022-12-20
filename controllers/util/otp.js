@@ -24,7 +24,8 @@ function verifyotp(mobile,otp){
       .then((verification_check) =>{ console.log(verification_check.status)
       resolve(verification_check)
     });
-    })
+    }).catch((verification_check) =>{ console.log(verification_check.status)
+        resolve(verification_check)})
 }
 
 module.exports = {

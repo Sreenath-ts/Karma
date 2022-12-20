@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
         require:[true,'One categorry needed']
     },
     image:{
-        type:[String],
+        type:Array,
         required:true
     },
     description:{

@@ -127,15 +127,22 @@ module.exports={
    
     console.log(req.files.imagee2)
     const image = req.files.imagee2
-    let imageUrl = image[0].path
-    imageUrl = imageUrl.substring(6)
+    console.log(image.length)
+        let img =[]
+   image.forEach((el,i,arr) => {
+      img.push(arr[i].path.substring(6));
+    });
+
+    console.log(img);
+  
+  
     const productz = new products({
       title:req.body.title,
       brand:req.body.brand,
       price:req.body.price,
       stock:req.body.stock,
       category:req.body.category.trim(),
-      image:[imageUrl],
+      image:img,
       description:req.body.description,
       discount:req.body.discount,
       size:req.body.size
@@ -181,8 +188,73 @@ module.exports={
     req.session.admin = null
     res.redirect('/admin/adminLogin')
   },
-  editPro:(req,res)=>{
-    console.log(req.params.id);
-    res.render('admin/editPro',{uzer:false,admin:true})
+  editPro:async(req,res)=>{
+    const id = req.query.id;
+    const categories = await category.find()
+    const pros = await products.findOne({_id:id}).populate("category")
+    console.log(pros.category);
+    res.render('admin/editPro',{uzer:false,admin:true,pros,categories})
+  },
+  postEditPro:async(req,res)=>{
+    console.log(req.body);
+    const id = req.params.id
+    console.log(id);
+    const image = req.files.imagee2
+    const pro ={
+      title:req.body.title,
+      brand:req.body.brand,
+      price:req.body.price,
+      stock:req.body.stock,
+      category:req.body.category,
+      description:req.body.description,
+      discount:req.body.discount,
+      size:req.body.size
+    }
+    if(image){
+      let img =[]
+      image.forEach((el,i,arr) => {
+         img.push(arr[i].path.substring(6));
+       });
+   
+      const productz = await products.updateOne({_id:id},{
+        $set:{
+          title:pro.title,
+          brand:pro.brand,
+          price:pro.price,
+          stock:pro.stock,
+          category:pro.category.trim(),
+          image:img,
+          description:pro.description,
+          discount:pro.discount,
+          size:pro.size
+        }
+      })
+    }else{
+      const productz = await products.updateOne({_id:id},{
+        $set:{
+          title:pro.title,
+          brand:pro.brand,
+          price:pro.price,
+          stock:pro.stock,
+          category:pro.category.trim(),
+          description:pro.description,
+          discount:pro.discount,
+          size:pro.size
+        }
+      })
+    }
+   
+    
+    res.redirect('/admin/products')
+  },
+  deletePro:(req,res)=>{
+    const id = req.params.id
+    console.log(id);
+    products.deleteOne({_id:id}).then(()=>{
+      res.redirect('/admin/products')
+    }).catch(e=>{
+      res.redirect('/admin/products')
+      console.log(e);
+    })
   }
 }

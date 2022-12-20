@@ -6,12 +6,12 @@ module.exports={
             let response = {}
            
            
-            let userz = await user.find({ email: userLog.email })
+            let userz = await user.findOne({ email: userLog.email })
             
-            if(userz.length>0 && userz[0].access){
-                bcrypt.compare(userLog.password, userz[0].password).then((stat) => {
+            if(userz && userz.access){
+                bcrypt.compare(userLog.password, userz.password).then((stat) => {
                     if(stat){
-                        response.user = userz.name
+                        response.user = userz
                         response.status = true
                         resolve(response)
                         console.log("login success");

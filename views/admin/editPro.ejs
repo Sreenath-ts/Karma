@@ -6,62 +6,70 @@
       
         <div class="col-sm-12   col-xl-6">
           
-            <form action="/admin/addProd" method="post" enctype="multipart/form-data">
+            <form action="/admin/postEditPro/<%= pros._id %>" method="post" enctype="multipart/form-data">
                 <!-- Name input -->
                 <div class="form-outline mb-4">
                   
-                  <input type="text" name="title" id="form4Example1" class="form-control" />
+                  <input type="text" name="title" value="<%= pros.title %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Title</label>
                 </div>
                
                 <div class="form-outline mb-4">
-                    <input type="text" name="brand" id="form4Example1" class="form-control" />
+                    <input type="text" name="brand" value="<%= pros.brand %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Brand</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="number" name="price" id="form4Example1" class="form-control" />
+                    <input type="number" name="price" value="<%= pros.price %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Price</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="number" name="stock" id="form4Example1" class="form-control" />
+                    <input type="number" name="stock" value="<%= pros.stock %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Stock</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <select name="category" id="category">
-                     <option value="">men</option>
+                    <select  name="category" id="category">
+                    <% categories.forEach(element => {%>
+                        <option value="<%= element._id %> "><%= element.name %> </option>
+                    <%})%>
                    </select>
                   <label class="form-label" for="form4Example1">Category</label>
                 </div>
-
                
                
                 <div class="form-outline mb-4">
-                  <input type="file" name="imagee2" id="image" class="form-control" multiple />
+                    <img src="<%= pros.image %> " id="imgView" class="mb-3" width="100px" height="auto" alt="">
+                  <input type="file" name="imagee2" onchange="viewImage(event)" id="image" class="form-control" multiple />
                   <label class="form-label" for="form4Example1">Image</label>
                   
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text" name="description" id="form4Example1" class="form-control" />
+                    <input type="text" name="description" value="<%= pros.description %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Description</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text" name="discount" id="form4Example1" class="form-control" />
+                    <input type="text" name="discount" value="<%= pros.discount %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Discount</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text" name="size" id="form4Example1" class="form-control" />
+                    <input type="text" name="size" value="<%= pros.size %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Size</label>
                 </div>
               
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">Add Category</button>
+                <input type="submit" class="btn btn-primary btn-block mb-4" value="Add Product">
               </form>
             </div>
             </div>
         </div>
+        <script>
+            function viewImage(e){
+              document.getElementById('imgView').src = URL.createObjectURL(e.target.files[0])
+              
+            }
+          </script>
