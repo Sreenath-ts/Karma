@@ -25,12 +25,12 @@
                                 <!-- <th scope="col">Image</th> -->
                                 <th scope="col">Product</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">action</th>
+                                <th scope="col" style="width: 153px;">Quantity</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% if(cartz.cart.items.length===0){%>
+                            <% if(cartz.cart.items.length===0 ){%>
                                 <h5>Cart is Empty</h5>
                            <% }else{%>
 
@@ -39,6 +39,7 @@
                                 <% for(let i=0;i<cartz.cart.items.length;i++){ %>
 
                                <% let cartItems = cartz.cart.items[i] %> 
+                              
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
@@ -74,7 +75,7 @@
                             <%}%>
                             <tr class="bottom_button">
                                 <td>
-                                    <a class="gray_btn" href="#">Update Cart</a>
+                                  
                                 </td>
                                 <td>
 
@@ -86,7 +87,7 @@
                                     <div class="cupon_text d-flex align-items-center">
                                         <input type="text" placeholder="Coupon Code">
                                         <a class="primary-btn" href="#">Apply</a>
-                                        <a  style="padding: 0px 15px;" class="gray_btn" href="#">Close Coupon</a>
+                                      
                                     </div>
                                 </td>
                             </tr>
@@ -153,7 +154,7 @@
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a style="padding: 0px 15px;" class="gray_btn" href="#">Continue Shopping</a>
-                                        <a class="primary-btn" href="#">Proceed to checkout</a>
+                                        <a class="primary-btn" href="/checkout?user=<%= id %>">Proceed to checkout</a>
                                     </div>
                                 </td>
                             </tr>
@@ -183,24 +184,12 @@
             success:((response)=>{
                 if(response.access){
                     if(response.remove){
-                        Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire(
+                        Swal.fire(
       'Deleted!',
-      'Your file has been deleted.',
+      'Your item has been deleted.',
       'success'
     )
-   setTimeout(()=>location.reload(),2000) 
-  }
-})
+                  setTimeout(()=>location.reload(),2000)  
                    
                 }else{
                     document.getElementById(proId).value=response.status
@@ -215,7 +204,7 @@
   background: '#fff url(https://cdn.dribbble.com/users/289158/screenshots/17424235/media/cbb5c66fa688ad46ea08f5f817d37a98.jpg?compress=1&resize=400x300&vertical=top)',
   backdrop: `
     rgba(0,0,123,0.4)
-    url("https://sweetalert2.github.io/images/nyan-cat.gif")
+    url()
     left top
     no-repeat
   `

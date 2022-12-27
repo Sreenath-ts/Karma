@@ -1,0 +1,300 @@
+ <!-- Start Banner Area -->
+ <link rel="stylesheet" href="/buttonStyle.css">
+ <section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Checkout</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="single-product.html">Checkout</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <div class="cupon_area">
+            <div class="check_title">
+                <h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
+            </div>
+            <input type="text" placeholder="Enter coupon code">
+            <a class="tp_btn" href="#">Apply Coupon</a>
+        </div>
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <button class="glow-on-hover mb-2" data-toggle="modal" data-target="#exampleModal" type="button">Add Address!</button>
+                   <form id="checkout">
+                    <input type="text" name="Id" value="<%= useer._id %>" hidden>
+                    <% if(addresses) {%>
+                      <% for(i=0;i<addresses.address.length;i++){%>
+
+                   
+                    <div class="form-check form-check-inline">
+
+                       <% if(  addresses.address[i].status ) {%> 
+
+                      
+                        <input class="form-check-input" type="radio" name="address" id="inlineRadio1" value="<%= addresses.address[i]._id %>" checked/>
+                        <label class="form-check-label" for="inlineRadio1">Address <%= i+1 %></label>
+                        <p class="card-text"><%= addresses.address[i].name %> <br><%= addresses.address[i].mob %> <br><%= addresses.address[i].house %>, <%= addresses.address[i].landmark %> <br> Pin : <%= addresses.address[i].pincode %> <br> State :<%= addresses.address[i].state %></p>
+                        <% }else{%>
+                            <input class="form-check-input" type="radio" name="address" id="inlineRadio1" value="<%= addresses.address[i]._id %>"/>
+                            <label class="form-check-label" for="inlineRadio1">Address <%= i+1 %></label>
+                            <p class="card-text"><%= addresses.address[i].name %> <br><%= addresses.address[i].mob %> <br><%= addresses.address[i].house %>, <%= addresses.address[i].landmark %> <br> Pin : <%= addresses.address[i].pincode %> <br> State :<%= addresses.address[i].state %></p>
+                      <%  } %>
+                      </div>
+                      <% } %>
+                      <% } %> 
+                    <div class="payment_item active">
+                        <div class="radion_btn">
+                            <input type="radio" id="f-option6" value="OP" name="payment-method">
+                            <label for="f-option6">Online Payment</label>
+                            <img src="img/product/card.jpg" alt="">
+                            <div class="check"></div>
+                        </div>
+                        <p>Pay via razorpay; you can pay with your credit card if you don’t have a UPI
+                            account.</p>
+                    </div>
+                    <div class="payment_item">
+                      <div class="radion_btn">
+                          <input type="radio" id="f-option5" value="COD" name="payment-method">
+                          <label for="f-option5">Check payments</label>
+                          <div class="check"></div>
+                      </div>
+                      <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                          Store Postcode.</p>
+                  </div>
+                  <input type="submit" class="primary-btn" value="Proceed">
+                   </form>
+                  
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li><a href="#">Product <span>Total</span></a></li>
+                            <% for(let i=0;i<useer.cart.items.length;i++){  %>
+                                <% let cartItems = useer.cart.items[i] %> 
+                            <li><a href="#"><%= cartItems.product_id.title %><span class="middle">x <%= cartItems.qty %></span> <span class="last">$720.00</span></a></li>
+                            
+                            <% } %> 
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a href="#">Subtotal <span></span><%= useer.cart.totalPrice %></a></li>
+                            <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
+                            <li><a href="#">Total <span>$<%= useer.cart.totalPrice %></span></a></li>
+                        </ul>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                        <!-- <a class="primary-btn" href="#">Proceed to Paypal</a> -->
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row"  >
+            <div class="col-md-12">
+              <div class="card  mb-md-0">
+                <div class="card-body">
+        <form id="address-form">
+            <p class="mb-4"><span class="text-primary font-italic me-1">Address</span> 1.
+            </p>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <input type="text" name="name" id="form7Example1" class="form-control" />
+                  <label class="form-label" for="form7Example1">Name</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <input type="number" name="mob" id="form7Example2" class="form-control" />
+                  <label class="form-label" for="form7Example2">Mobile</label>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <input type="text" name="house" id="form7Example3" class="form-control" />
+              <label class="form-label" for="form7Example3">House name</label>
+            </div>
+        
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <input type="text" name="landmark" id="form7Example4" class="form-control" />
+              <label class="form-label" for="form7Example4">Landmark</label>
+            </div>
+        
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="text" name="city" id="form7Example5" class="form-control" />
+              <label class="form-label" for="form7Example5">City</label>
+            </div>
+        
+            <!-- Number input -->
+            <div class="form-outline mb-4">
+              <input type="text" name="district" id="form7Example6" class="form-control" />
+              <label class="form-label" for="form7Example6">District</label>
+            </div>
+        
+            <div class="form-outline mb-4">
+                <input type="text" name="state" id="form7Example6" class="form-control" />
+                <label class="form-label" for="form7Example6">State</label>
+              </div>
+        
+              <div class="form-outline mb-4">
+                <input type="number" name="pincode" id="form7Example6" class="form-control" />
+                <label class="form-label" for="form7Example6">Pincode</label>
+                
+              </div>
+              <input type="submit" class="btn btn-dark" value="Submit">
+            <!-- Message input -->
+            <!-- <div class="form-outline mb-4">
+              <textarea class="form-control" id="form7Example7" rows="4"></textarea>
+              <label class="form-label" for="form7Example7">Additional information</label>
+            </div> -->
+        
+           
+          </form>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+    
+</section>
+<!--================End Checkout Area =================-->
+
+
+<script>
+
+$("#address-form").submit((e)=>{
+       e.preventDefault()
+       $.ajax({
+           url:'/address',
+           method:'post',
+           dataType: "json",
+            encode: true,
+           data:$("#address-form").serialize(),
+           success:((response)=>{
+            console.log(response);
+               if(response.status){
+                console.log('hiiiiiiiiiiiiiiiiiiiiiii');
+                location.reload()
+               }
+           })
+       })
+    })
+
+
+ $('#checkout').submit((e)=>{
+    e.preventDefault()
+    $.ajax({
+        url:'/order',
+        method:'post',
+        data:$('#checkout').serialize(),
+        success:((res)=>{
+           if(res.paymentSuccess){
+            location.href = '/success'
+           }else{
+            razorpayPayment(res)
+           }
+        })
+    })
+ })
+
+    function razorpayPayment(res){
+      var options = {
+    "key": "rzp_test_ngrk05K8dXJcQe", // Enter the Key ID generated from the Dashboard
+    "amount": res.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Karma",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": res.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+        verifyPayment(response,res.order)
+    },
+    "prefill": {
+        "name": res.useer.name,
+        "email": res.useer.email,
+        "contact": res.useer.phone
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+        alert("Saad")
+
+});
+
+    rzp1.open();
+   
+
+    }
+    function verifyPayment(payment,order){
+      console.log(payment);
+      $.ajax({
+        url:'/verify-payment',
+        method:'post',
+        data:{
+          payment,
+          order
+        },
+        success:((response)=>{
+          if(response.status){
+            location.href = '/success'
+          }else{
+            alert('payment is a failure')
+          }
+        })
+      })
+    }
+
+</script>

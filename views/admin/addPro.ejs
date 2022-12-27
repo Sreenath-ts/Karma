@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-outline mb-4">
-                    <select name="category" id="category">
+                    <select style="border-radius: 10px;border-color: blue;background-color: aqua;" name="category" id="category">
                     <% categories.forEach(element => {%>
                         <option value="<%= element._id %> "><%= element.name %> </option>
                     <%})%>
