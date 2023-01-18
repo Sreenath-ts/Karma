@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 const mongoose = require('mongoose')
 
 const addressSchema = new mongoose.Schema({
@@ -56,5 +57,15 @@ addressSchema.methods.delete = async function (addId) {
   add.splice(Existing, 1)
   return this.save()
 }
-
+addressSchema.methods.finding = async function (addId) {
+  const addresses = this.address
+  const res = []
+  for (let i = 0; i < addId.length; i++) {
+    const index = await addresses.findIndex(obj => obj._id == addId[i])
+    if (index >= 0) {
+      res.push(addresses[index])
+    }
+  }
+  return res
+}
 module.exports = mongoose.model('Address', addressSchema)

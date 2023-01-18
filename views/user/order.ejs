@@ -1,4 +1,78 @@
+<style>
+  .button-17 {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
 
+.button-17:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.button-17:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.button-17:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-17:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-17:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-17:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+</style>
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+  <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+  </div>
+</div>
 <div class="card " style="margin-top: 7%;">
   <div class="card-body">
     <div class="container mb-5 mt-3">
@@ -17,9 +91,12 @@
 
       <div class="container">
         <div class="col-md-12">
+       
+
+        
           <div class="text-center">
             <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
-            <p class="pt-0">MDBootstrap.com</p>
+            <p class="pt-0">Your Orders</p>
           </div>
 
         </div>
@@ -28,76 +105,74 @@
         <div class="row">
           <div class="col-xl-8">
             <ul class="list-unstyled">
-              <li class="text-muted">To: <span style="color:#5d9fc5 ;">John Lorem</span></li>
+              <li class="text-muted">To: <span style="color:#5d9fc5 ;"></span></li>
               <li class="text-muted">Street, City</li>
               <li class="text-muted">State, Country</li>
               <li class="text-muted"><i class="fas fa-phone"></i> 123-456-789</li>
             </ul>
           </div>
-          <div class="col-xl-4">
-            <p class="text-muted">Invoice</p>
-            <ul class="list-unstyled">
-              <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                  class="fw-bold">ID:</span>#123-456</li>
-              <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                  class="fw-bold">Creation Date: </span>Jun 23,2021</li>
-              <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                  class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
-                  Unpaid</span></li>
-            </ul>
-          </div>
+         
         </div>
 
         <div class="row my-2 mx-1 justify-content-center">
+          
           <table class="table table-striped table-borderless">
             <thead style="background-color:#84B0CA ;" class="text-white">
+            
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Description</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Unit Price</th>
-                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Address</th>
+                <th scope="col">Total</th>
+                <th scope="col">Products</th>
+                <th scope="col" >Status Change</th>
+                <th scope="col">Print</th>
               </tr>
             </thead>
             <tbody>
+              <% for(i=0;i<od.length;i++){%>
               <tr>
                 <th scope="row">1</th>
-                <td>Pro Package</td>
-                <td>4</td>
-                <td>$200</td>
-                <td>$800</td>
+                <td><%= od[i].date.toLocaleString() %></td>
+                <td><%= od[i].orderStatus %></td>
+                <td><%= od[i].paymentMethod %></td>
+                <td><%= result[i].name %>,<%= result[i].mob %>,<%= result[i].house%>,<%= result[i].landmark%>,<%=result[i].district%>,<%= result[i].state%>,<%= result[i].pincode %></td>
+                <td><%= od[i].cart.totalPrice %></td>
+               
+              
+                <td><button class="button-17" data-toggle="modal" data-target="#exampleModal" id="" onclick="getPro('<%= od[i]._id %>')"  role="button">Products</button></td>
+                <% if(od[i].orderStatus != 'cancelled') {  %> 
+                 
+                <td><button class="button-17" value="cancelled"  id="cancel"  onclick="status(this,'<%= od[i]._id %>')"  role="button">Cancel</button></td> 
+                <% }else{%>
+                <td><button   class="button-17"   id="nocancel"    role="button">Cancelled</button></td> 
+                <% } %> 
+                <td> <a  href="/invoice/?id=<%= od[i]._id %>" class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
+                  class="fas fa-print text-primary"></i> Print</a></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Web hosting</td>
-                <td>1</td>
-                <td>$10</td>
-                <td>$10</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Consulting</td>
-                <td>1 year</td>
-                <td>$300</td>
-                <td>$300</td>
-              </tr>
+             
+              <% } %> 
+           
             </tbody>
 
           </table>
         </div>
         <div class="row">
           <div class="col-xl-8">
-            <p class="ms-3">Add additional notes and payment information</p>
+            <p class="ms-3"></p>
 
           </div>
-          <div class="col-xl-3">
+          <!-- <div class="col-xl-3">
             <ul class="list-unstyled">
               <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$1110</li>
               <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
             </ul>
             <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
                 style="font-size: 25px;">$1221</span></p>
-          </div>
+          </div> -->
+       
         </div>
         <hr/>
         <div class="row">
@@ -105,12 +180,110 @@
             <p>Thank you for your purchase</p>
           </div>
           <div class="col-xl-2">
-            <button type="button" class="btn btn-primary text-capitalize"
-              style="background-color:#60bdf3 ;">Pay Now</button>
+            <!-- <button type="button" class="btn btn-primary text-capitalize"
+              style="background-color:#60bdf3 ;">Pay Now</button> -->
           </div>
         </div>
+<!-- HTML !-->
+
+
+
 
       </div>
     </div>
   </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="detialsListingResponse">
+
+        </div>
+
+        <div id="detialsListing">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+ function getPro(id){
+console.log(id);
+$("#detialsListingResponse").html('<i class="fa-solid fa-spinner fa-spin">Fetching data..')
+
+ $.ajax({
+  url:'/orderProducts',
+  method:'post',
+
+  data:{
+   orderId:id
+  },
+  success:((response)=>{
+    
+    $('#detialsListing').html('')
+    response.cart.items.forEach((val,i)=>{
+      $('#detialsListing').append(`<table class="table table-hover ">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Size</th>
+      <th scope="col">Description</th>
+      <th scope="col">Images</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">${i+1}</th>
+      <td>${val.product_id.title}</td>
+      <td>${val.product_id.price}</td>
+      <td>${val.qty}</td>
+      <td>${val.product_id.size}</td>
+      <td>${val.product_id.description}</td>
+      <td><img src=${val.product_id.image[0]} width='50px' height='auto'></td>
+    </tr>
+  </tbody>
+</table>`)
+
+    })
+    $('#detialsListingResponse').html('')
+  })
+ })
+ }
+
+ function status(e,od){
+$.ajax({
+    url:`/admin/changeStatus?s=${e.value}&id=${od}`,
+    method:'get',
+    success:((response)=>{
+        if(response.status){
+            Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Your work has been saved',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+setTimeout(()=>location.reload(),4000)
+
+// document.getElementById('nocancel').style.display='flex'
+        }
+    })
+})
+}
+</script>

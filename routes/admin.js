@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { verifyAdmin } = require('../middleware/auth')
+
 const {
   dash,
   userpage,
@@ -20,9 +21,23 @@ const {
   logout,
   editPro,
   postEditPro,
-  deletePro
-
-} = require('../controllers/adminController')
+  deletePro,
+  addCoupons,
+  postAddCoupons,
+  bannerAdd,
+  PostBannerAdd,
+  banner,
+  deleteBanner,
+  order,
+  changeStatus,
+  coupons,
+  DeleteCoupon,
+  salesReport,
+  monthSalesReport,
+  yearSalesReport,
+  chart1,
+  monthlyRev
+} = require('../controllers/admincontroller')
 
 router.get('/', verifyAdmin, dash)
 router.get('/userlist', verifyAdmin, userpage)
@@ -43,5 +58,19 @@ router.get('/logout', logout)
 router.get('/editPro', verifyAdmin, editPro)
 router.post('/postEditPro/:id', postEditPro)
 router.get('/deletePro/:id', deletePro)
-
+router.get('/add-coupon', verifyAdmin, addCoupons)
+router.post('/add-coupon', verifyAdmin, postAddCoupons)
+router.get('/add-banner', bannerAdd)
+router.post('/add-banner', PostBannerAdd)
+router.get('/banner', verifyAdmin, banner)
+router.get('/delete-banner', verifyAdmin, deleteBanner)
+router.get('/order', verifyAdmin, order)
+router.get('/changeStatus', verifyAdmin, changeStatus)
+router.get('/coupons', coupons)
+router.get('/coupon-delete', DeleteCoupon)
+router.get('/salesReport', salesReport)
+router.get('/monthSales', monthSalesReport)
+router.get('/yearSales', yearSalesReport)
+router.get('/chart1', chart1)
+router.get('/getRevenue', monthlyRev)
 module.exports = router

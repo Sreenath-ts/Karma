@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 const mongoose = require('mongoose')
 const products = require('./product')
 // const validator = require('validator')
@@ -9,7 +10,8 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     require: true,
-    unique: true
+    unique: true,
+    lowercase: true
 
   },
   phone: {
@@ -40,13 +42,20 @@ const userSchema = new mongoose.Schema({
       }
     }
     ],
-    totalPrice: Number
+    totalPrice: {
+      type: Number
+
+    },
+    resetToken: String,
+    resetTokenExpiration: Date
   }
 })
 
-userSchema.methods.addCart = function (pro) {
+userSchema.methods.addCart = async function (pro) {
   const cart = this.cart
   const isExisting = cart.items.findIndex(objItems => objItems.product_id == pro._id)
+  const product = await products.findOne({ _id: pro._id })
+  console.log(product)
   if (isExisting >= 0) {
     cart.items[isExisting].qty += 1
   } else {
@@ -61,40 +70,41 @@ userSchema.methods.addCart = function (pro) {
 
 userSchema.methods.count = function () {
   const cart = this.cart
-  if (cart.items.length != 0) {
+  if (cart.items.length !== 0) {
     const count = cart.items.length
     return count
   } else {
     return 0
   }
-  return 0
 }
 
 userSchema.methods.changeQty = async function (productId, qty, count, cb) {
   const cart = this.cart
-  console.log(qty)
+
   const quantity = parseInt(qty)
   const cnt = parseInt(count)
-  console.log('%%%%%%' + quantity)
+
   const response = {}
   const product = await products.findOne({ _id: productId })
-  if (cnt == -1 && quantity == 1) {
+  if (cnt === -1 && quantity === 1) {
     const Existing = cart.items.findIndex(objitems => objitems.product_id == productId)
     cart.items.splice(Existing, 1)
     cart.totalPrice -= product.price
     response.remove = true
-  } else if (cnt == 1) {
-    console.log('hiii-plus')
+  } else if (cnt === 1) {
+    const Existing = cart.items.findIndex(objitems => objitems.product_id == productId)
+    if (cart.items[Existing].qty < product.stock) {
+      cart.items[Existing].qty += cnt
+
+      cart.totalPrice += product.price
+      response.status = cart.items[Existing].qty
+    } else {
+      response.stock = true
+    }
+  } else if (cnt === -1) {
     const Existing = cart.items.findIndex(objitems => objitems.product_id == productId)
     cart.items[Existing].qty += cnt
-    console.log(cart.items[Existing].qty)
-    cart.totalPrice += product.price
-    response.status = cart.items[Existing].qty
-  } else if (cnt == -1) {
-    console.log('hiiiiiii-minus')
-    const Existing = cart.items.findIndex(objitems => objitems.product_id == productId)
-    cart.items[Existing].qty += cnt
-    console.log(cart.items[Existing])
+
     cart.totalPrice -= product.price
     response.status = cart.items[Existing].qty
   }

@@ -8,33 +8,33 @@ const instance = new Razorpay({
 })
 module.exports = {
   dologin: (userLog) => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const response = {}
 
-      const userz = await user.findOne({ email: userLog.email })
-
-      if (userz && userz.access) {
-        bcrypt.compare(userLog.password, userz.password).then((stat) => {
-          if (stat) {
-            response.user = userz
-            response.status = true
-            resolve(response)
-            console.log('login success')
-          } else {
-            resolve({ status: false })
-            console.log('password wrong')
-          }
-        })
-      } else {
-        resolve({ status: false })
-        console.log('no user')
-      }
+      user.findOne({ email: userLog.email }).then((userz) => {
+        if (userz && userz.access) {
+          bcrypt.compare(userLog.password, userz.password).then((stat) => {
+            if (stat) {
+              response.user = userz
+              response.status = true
+              resolve(response)
+              console.log('login success')
+            } else {
+              resolve({ status: false })
+              console.log('password wrong')
+            }
+          })
+        } else {
+          resolve({ status: false })
+          console.log('no user')
+        }
+      })
     })
   },
   generateOrder: (order) => {
     return new Promise((resolve, reject) => {
       const orderId = order._id
-      const total = order.products[0].totalPrice
+      const total = order.cart.totalPrice
       console.log(orderId, total)
       instance.orders.create({
         amount: total * 100,
@@ -62,6 +62,7 @@ module.exports = {
       const hmac = crypto.createHmac('sha256', secret)
         .update(detials.payment.razorpay_order_id + '|' + detials.payment.razorpay_payment_id)
         .digest('hex')
+      // eslint-disable-next-line eqeqeq
       if (hmac == detials.payment.razorpay_signature) {
         resolve()
       } else {

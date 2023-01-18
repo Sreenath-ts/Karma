@@ -1,3 +1,30 @@
+<style>
+ .tb{
+    width: 100px;
+ }
+ div.a {
+  /* white-space: nowrap; 
+  width: 200px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+   */
+   width: 100px;
+   overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 18px; 
+        max-height: 35px;     
+          
+        /* The number of lines to be displayed */
+        -webkit-line-clamp: 4; 
+        -webkit-box-orient: vertical;
+  
+}
+div.a:hover {
+overflow: visible;  
+}
+</style>
+
 <div class="container-fluid  pt-4 px-4" >
     <div class="row g-4">
         <div class="  col-xl-2">
@@ -16,7 +43,7 @@
                             <th scope="col">price</th>
                             <th scope="col">stock</th>
                             <th scope="col" >image</th>
-                            <th scope="col"  rowspan="10">Description</th>
+                            <th scope="col tb">Description</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Size</th>
                             <th scope="col">Edit</th>
@@ -46,7 +73,7 @@
                                <% } %>
                             </td>
                                
-                                <td  ><%= element.description %> </td>
+                                <td class="tb"><div class="a"><%= element.description %></div></td>
                                 <td><%= element.discount %> </td>
                                 <td><%= element.size %> </td>
                                 <td>

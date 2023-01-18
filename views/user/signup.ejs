@@ -1,19 +1,16 @@
 
+<style>
+  .invalid{
+    border:2px solid red !important;
+    
+  }
+</style>
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+  <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+  </div>
+</div>
 
-<section class="banner-area organic-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>Login/Register</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">Login/Register</a>
-                </nav>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Banner Area -->
 
 <!--================Login Box Area =================-->
 <section class="login_box_area section_gap">
@@ -32,31 +29,36 @@
             <div class="col-lg-6">
                 <div class="login_form_inner">
                     <h3>Register</h3>
-                    <form class="row login_form" action="/signup" method="post" id="signupForm">
+                    <% if(errorMsg!=null) { %>
+                      <div class="alert alert-danger" role="alert">
+                    <%= errorMsg %> 
+                      </div>
+                     <% } %> 
+                    <form class="row login_form" action="/signup" method="post" id="signupForm" novalidate>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fullname'" required>
+                            <input type="text" class="form-control <%= validateErrors.find(e=>e.param=='name') ? 'invalid' : '' %> " id="name" name="name" value="<%= oldInput.name %>" placeholder="Fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fullname'" required>
                             <p id="usercheck" style="color: red;">
                                 **Username is missing
                             </p>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
+                            <input type="email" class="form-control <%= validateErrors.find(e=>e.param=='email') ? 'invalid' : '' %>" id="email" name="email" value="<%= oldInput.email %>" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
                             <small id="emailvalid" class="form-text
                             text-muted invalid-feedback">
                                     Your email must be a valid email
                                 </small>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Mobile number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile number'" required>
+                            <input type="tel" class="form-control <%= validateErrors.find(e=>e.param=='phone') ? 'invalid' : '' %>" id="phone" name="phone" value="<%= oldInput.phone %>" placeholder="Mobile number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile number'" required>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required>
+                            <input type="password" class="form-control <%= validateErrors.find(e=>e.param=='password') ? 'invalid' : '' %>" id="password" name="password" value="<%= oldInput.password %>" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required>
                             <p id="passcheck" style="color: red;">
                                 **Please Fill the password
                             </p>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
+                            <input type="password" class="form-control <%= validateErrors.find(e=>e.param=='confirmPassword') ? 'invalid' : '' %>" id="confirmPassword" name="confirmPassword" value="<%= oldInput.confirmPassword %>" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
                             <p id="conpasscheck" style="color: red;">
                                 **Password didn't match
                             </p>
@@ -122,7 +124,7 @@
   $("#password").keyup(function () {
     validatePassword();
   });
-  function validatePassword() {
+  async function validatePassword () {
     let passwordValue = $("#password").val();
     if (passwordValue.length == "") {
       $("#passcheck").show();
@@ -137,11 +139,27 @@
       $("#passcheck").css("color", "red");
       passwordError = false;
       return false;
-    } else {
+    } 
+    let res= await containsSpecialChars(passwordValue)
+   console.log(res);
+  if(res===false){
+    $("#passcheck").show();
+      $("#passcheck").html(
+        "Password must contain special characters"
+      );
+      $("#passcheck").css("color", "red");
+      passwordError = false;
+      return false;
+  }
+  else {
       $("#passcheck").hide();
     }
   }
- 
+  function containsSpecialChars(str) {
+    console.log('ivde vannu');
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  return specialChars.test(str);
+}
   // Validate Confirm Password
   $("#conpasscheck").hide();
   let confirmPasswordError = true;
@@ -184,47 +202,6 @@
     }
   });
 });
-    // $(document).ready(function(){
-    //     $('#signupForm').validate({
-    //         rules:{
-    //             name:{
-    //                 required:true,
-    //                 minlength:2
-    //             },
-    //             email:{
-    //               required:true,
-    //               email:true
-    //             },
-    //             phone:{
-    //                required:true,
-    //                number:true
-    //             },
-    //             password:{
-    //                 required:true,
-    //                 minlength:5
-    //             },
-    //             confirmPassword:{
-    //                 required:true,
-    //                 minlength:5,
-    //                 equalTo:"#password"
-    //             }
-    //         },
-    //         messages:{
-    //             name:{
-    //                 required: "Please enter a name",
-    //                 minlength: "Your name must consist of at least 2 characters"
-    //             },
-    //             password:{
-    //                 required:"Please provide a password",
-    //                 minlength: "Your password must be atleast  5 characters long"
-    //             },
-    //             confirmPassword:{
-    //                 required: "Please provide a password",
-    //                 minlength: "Your password must be atleast  5 characters long",
-    //                 equalTo:"please enter the same password as above"
-    //             }
-    //         }
-    //     })
-    // })
+   
 </script>
 <!--================End Login Box Area =================-->

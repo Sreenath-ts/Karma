@@ -1,0 +1,114 @@
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+<section class="related-product-area section_gap_bottom mt-5">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-6 text-center mt-5">
+                <div class="section-title mt-5" >
+                    <h1>Your Wishlist</h1>
+                    <p>May all your wishes comes true.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <% if(wish!==null || wish.products.length!==0){ %>
+                        <% wish.products.forEach((el)=>{ %>
+
+                      
+                    <div class="col-lg-6 col-md-4 col-sm-6 mb-30">
+                        <div class="single-related-product d-flex">
+                            <a href="#"><img width="100rem" height="auto" src="<%= el.product.image[0] %>" alt=""></a>
+                            <div class="desc">
+                                <a href="#" class="title"><%= el.product.title %></a>
+                                <div class="price">
+                                    <h6>$<%= el.product.price %></h6>
+                                    <!-- <h6 class="l-through">$210.00</h6> -->
+                                </div>
+                            </div>
+                            <div class="add-bag d-flex align-items-center" >
+                                <a class="add-btn" onclick="addToCart('<%= el.product._id %>')" ><span class="lnr lnr-cross"></span></a>
+                                <span class="add-text text-uppercase">Add to Bag</span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <%  }) %>
+                    <%  } %> 
+                
+              
+                 
+               
+
+                
+                 
+                </div>
+            </div>
+            <!-- <div class="col-lg-3">
+                <div class="ctg-right">
+                    <a href="#" target="_blank">
+                        <img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
+                    </a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>
+
+<script>
+    		function addToCart(proId){
+			
+			$.ajax({
+				url:'/addCartHome',
+				method:'post',
+				data:{
+					productId : proId
+				},
+				success:((response)=>{
+					    if(response.access){
+                            const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: 'Added to Cart!!'
+})
+							document.getElementById('count').innerHTML=response.count
+						document.getElementById(proId).value=response.status
+                    document.getElementById('total').innerHTML=response.total
+
+						}else{
+							Swal.fire({
+  title: 'Please Login!!',
+  width: 600,
+  padding: '3em',
+  color: '#716add',
+  background: '#fff url(https://cdn.dribbble.com/users/289158/screenshots/17424235/media/cbb5c66fa688ad46ea08f5f817d37a98.jpg?compress=1&resize=400x300&vertical=top)',
+  backdrop: `
+    rgba(0,0,123,0.4)
+    url("https://sweetalert2.github.io/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `
+})
+						}
+						
+
+					
+				})
+			})
+		}
+</script>

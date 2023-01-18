@@ -18,12 +18,12 @@ function verifyotp (mobile, otp) {
     client.verify.v2.services(serviceid)
       .verificationChecks
       .create({ to: `+91${mobile}`, code: otp })
-      .then((verification_check) => {
-        console.log(verification_check.status)
-        resolve(verification_check)
-      }).catch((verification_check) => {
-        console.log(verification_check.status)
-        reject(verification_check)
+      .then((verificationCheck) => {
+        console.log(verificationCheck.status)
+        resolve(verificationCheck)
+      }).catch((verificationCheck) => {
+        console.log(verificationCheck.status)
+        reject(verificationCheck)
       })
   })
 }

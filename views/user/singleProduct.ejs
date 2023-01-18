@@ -1,4 +1,9 @@
 <!-- Start Banner Area -->
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 <section class="banner-area organic-breadcrumb">
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
@@ -18,12 +23,13 @@
 <!--================Single Product Area =================-->
 <div class="product_image_area">
     <div class="container">
+       
         <div class="row s_product_inner">
             <div class="col-lg-6">
                 <div class="s_Product_carousel">
                     <% pro.image.forEach((element)=>{%>
-                        <div class="single-prd-item">
-                            <img class="img-fluid" src="<%= element %> " alt="">
+                        <div class="single-prd-item hover-pinch-zoom-img" id="parent_div_of_image" style="width:30vw; height: 70vh;">
+                            <img class="img-fluid mob" src="<%= element %> " alt="">
                         </div>
                    <% }) %> 
                    
@@ -44,14 +50,14 @@
                         <li><a href="#"><span><%= pro.stock %> </span> : In Stock</a></li>
                     </ul>
                     <p><%= pro.description %> </p>
-                    <div class="product_count">
+                    <!-- <div class="product_count">
                         <label for="qty">Quantity: </label>
-                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                         class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp&amp, sst > 0 ) result.value--;return false;"
-                         class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                    </div>
+                        <input style="height: 39px;" type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                        <button 
+                        class="increase items-count"  type="button"><i class="lnr lnr-chevron-up" ></i></button>
+                    <button 
+                        class="reduced items-count"  type="button"><i class="lnr lnr-chevron-down mb-2"></i></button>
+                    </div> -->
                     <div class="card_area d-flex align-items-center">
                         <a class="primary-btn" href="/add-to-cart?Proid=<%= pro._id %>">Add to Cart</a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
@@ -525,3 +531,11 @@
     </div>
 </section>
 <!-- End related-product Area -->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var el = document.querySelector('#parent_div_of_image');
+init_zoom(el);
+});
+</script>

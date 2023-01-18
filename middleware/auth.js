@@ -1,3 +1,4 @@
+
 module.exports = {
   verifyAdmin: (req, res, next) => {
     if (req.session.admin) {

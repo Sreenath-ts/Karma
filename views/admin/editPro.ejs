@@ -28,11 +28,19 @@
                     <input type="number" name="stock" value="<%= pros.stock %>" id="form4Example1" class="form-control" />
                   <label class="form-label" for="form4Example1">Stock</label>
                 </div>
-
+                 
                 <div class="form-outline mb-4">
                     <select style="border-radius: 10px;border-color: blue;background-color: aqua;" name="category" id="category">
                     <% categories.forEach(element => {%>
-                        <option value="<%= element._id %> "><%= element.name %> </option>
+                      
+                      <option <% if(element.name==pros.category.name){ %>
+                            value="<%= pros.category._id %>" selected
+                     <% } else{ %>
+                      value="<%= element._id %>"
+                    <%   }%> >
+                          <%= element.name %> 
+                      </option>
+                        
                     <%})%>
                    </select>
                   <label class="form-label" for="form4Example1">Category</label>

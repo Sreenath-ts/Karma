@@ -1,4 +1,9 @@
  <!-- Start Banner Area -->
+ <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+  <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+  </div>
+</div>
  <link rel="stylesheet" href="/buttonStyle.css">
  <section class="banner-area organic-breadcrumb">
     <div class="container">
@@ -20,7 +25,16 @@
     <div class="container">
         <div class="cupon_area">
             <div class="check_title">
-                <h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
+                <% if(error){%>
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong><%= error %> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+               <% } %>
+                
+               
             </div>
             <input type="text" placeholder="Enter coupon code">
             <a class="tp_btn" href="#">Apply Coupon</a>
@@ -54,7 +68,7 @@
                       <% } %> 
                     <div class="payment_item active">
                         <div class="radion_btn">
-                            <input type="radio" id="f-option6" value="OP" name="payment-method">
+                            <input type="radio" id="f-option6" value="OP" name="payment-method" required>
                             <label for="f-option6">Online Payment</label>
                             <img src="img/product/card.jpg" alt="">
                             <div class="check"></div>
@@ -64,7 +78,7 @@
                     </div>
                     <div class="payment_item">
                       <div class="radion_btn">
-                          <input type="radio" id="f-option5" value="COD" name="payment-method">
+                          <input type="radio" id="f-option5" value="COD" name="payment-method" required>
                           <label for="f-option5">Check payments</label>
                           <div class="check"></div>
                       </div>

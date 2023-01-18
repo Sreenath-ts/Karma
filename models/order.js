@@ -11,9 +11,18 @@ const orderSchema = mongoose.Schema({
     ref: 'Address',
     required: true
   },
-  products: {
-    type: Array,
-    required: true
+  cart: {
+    items: [{
+      product_id: {
+        type: String,
+        ref: 'products'
+      },
+      qty: {
+        type: Number
+      }
+    }
+    ],
+    totalPrice: Number
   },
   paymentMethod: String,
   orderStatus: String,
